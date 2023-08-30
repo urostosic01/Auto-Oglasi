@@ -26,10 +26,12 @@ function adjust_textarea(h) {
 <body>
 	<div class="topnav">
 <%-- 		<img class="logo" alt="logo" src="${pageContext.request.contextPath}/img/logo_transparent.png">
- --%>  		<a href="/AutoOglasi/prikaz/Onama.jsp">O nama</a> 
- 		<a href="/AutoOglasi/auth/loginPage">Login</a> 
- 		<a href="/AutoOglasi/gost/sviOglasi">Oglasi</a>
- 		
+ --%>  		
+ 		<security:authorize access="!isAuthenticated()">
+	 		<a href="/AutoOglasi/prikaz/Onama.jsp">O nama</a> 
+	 		<a href="/AutoOglasi/auth/loginPage">Login</a> 
+	 		<a href="/AutoOglasi/gost/sviOglasi">Oglasi</a>
+ 		</security:authorize>
  
 		<security:authorize access="isAuthenticated()">
 			<a href="/AutoOglasi/admin/unosProizvodjaca">Nov proizvodjac</a>

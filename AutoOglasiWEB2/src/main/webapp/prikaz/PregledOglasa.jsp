@@ -48,8 +48,15 @@
 <body>
 	<div class="topnav">
 <%-- 		<img class="logo" alt="logo" src="${pageContext.request.contextPath}/img/logo_transparent.png">
- --%>  		<a href="/AutoOglasi/prikaz/Onama.jsp">O nama</a> 
+ --%>
+ 		<security:authorize access="!isAuthenticated()">
+			<a href="/AutoOglasi/prikaz/Onama.jsp">O nama</a> 
+			<a href="/AutoOglasi/auth/loginPage">Login</a> 
+			<a href="/AutoOglasi/gost/sviOglasi">Oglasi</a>
+		</security:authorize>
+		
 		<security:authorize access="isAuthenticated()">
+			<a href="/AutoOglasi/prikaz/Onama.jsp">O nama</a> 
 			<a href="/AutoOglasi/admin/unosProizvodjaca">Nov proizvodjac</a>
 			<a href="/AutoOglasi/admin/unosModela">Nov model</a>
 			<a href="/AutoOglasi/oglasi/sviOglasi">Oglasi</a>
@@ -71,6 +78,9 @@
 		</form>
 		<form action="/AutoOglasi/oglasi/sortDatumNajnoviji" method="get">
 			<button type="submit">Prvo najnoviji</button>
+		</form>
+		<form action="/AutoOglasi/oglasi/sortDatumNajstariji" method="get">
+			<button type="submit">Prvo najstariji</button>
 		</form>
 		
 		<button><a href="/AutoOglasi/oglasi/izvestajPocetnik" style="color: white;">Izvestaj pocetnik</a>

@@ -18,33 +18,25 @@ import org.springframework.security.web.util.matcher.AnyRequestMatcher;
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-	/*
-	 * @Override protected void configure(AuthenticationManagerBuilder auth) throws
-	 * Exception { auth.inMemoryAuthentication(). withUser("danijela").
-	 * password("{noop}123456"). roles("ADMIN"); }
-	 */
-
 	@Autowired
 	@Qualifier("customUserDetailsService")
 	UserDetailsService userDetailsService;
 
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-//		auth.userDetailsService(userDetailsService).passwordEncoder(NoOpPasswordEncoder.getInstance());
 		auth.userDetailsService(userDetailsService).passwordEncoder(new BCryptPasswordEncoder());
 	}
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.csrf().disable().authorizeRequests().antMatchers("/auth/**, /gost/**") // svaka putanja koja pocinje sa auth je
-																			// dostupna svima
-				.permitAll() // dostupno svima
-				.antMatchers("/oglasi/**").hasAnyRole("administrator", "registrovani").antMatchers("/admin/**")
-				.hasAnyRole("administrator").and().formLogin().loginPage("/auth/loginPage").loginProcessingUrl("/login")
+		http.csrf().disable().authorizeRequests()
+				.antMatchers("/auth/**, /gost/**").permitAll() // svaka putanja koja pocinje sa auth je dostupna svima
+				.antMatchers("/oglasi/**").hasAnyRole("administrator", "registrovani")
+				.antMatchers("/admin/**").hasAnyRole("administrator").and().formLogin().loginPage("/auth/loginPage").loginProcessingUrl("/login")
 				.usernameParameter("username").passwordParameter("password").defaultSuccessUrl("/auth/pocetna");
-		// .failureForwardUrl("/index.html")
-		// .and().exceptionHandling()
-		// .accessDeniedPage("/access_denied");
+//				.failureForwardUrl("/index.html")
+//				.and().exceptionHandling()
+//				.accessDeniedPage("/access_denied");
 //		        .and()
 //		        .logout()
 //		        .logoutSuccessUrl("/")

@@ -233,23 +233,29 @@ public class OglasiController {
 	
 	@RequestMapping(value="/sortCenaRastuce", method=RequestMethod.GET)
 	public String sortCenaRastuce(org.springframework.ui.Model m) {
-		List<Oglas> sortiraniCena = oglasRepo.sortCenaRastuce();
+		List<Oglas> sortiraniCena = oglasRepo.findByOrderByCenaAsc();
 		m.addAttribute("oglasi", sortiraniCena);
-		return "prikaz/PregledOglasa";
-	}
-	@RequestMapping(value="/sortDatumNajnoviji", method=RequestMethod.GET)
-	public String sortDatumNajnoviji(org.springframework.ui.Model m) {
-		List<Oglas> sortiraniDatum = oglasRepo.sortDatumNajnoviji();
-		m.addAttribute("oglasi", sortiraniDatum);
 		return "prikaz/PregledOglasa";
 	}
 	@RequestMapping(value="/sortCenaOpadajuce", method=RequestMethod.GET)
 	public String sortCenaOpadajuce(org.springframework.ui.Model m) {
-		List<Oglas> sortiraniCena = oglasRepo.sortCenaOpadajuce();
+		List<Oglas> sortiraniCena = oglasRepo.findByOrderByCenaDesc();
 		m.addAttribute("oglasi", sortiraniCena);
 		return "prikaz/PregledOglasa";
+	}	
+	@RequestMapping(value="/sortDatumNajnoviji", method=RequestMethod.GET)
+	public String sortDatumNajnoviji(org.springframework.ui.Model m) {
+		List<Oglas> sortiraniDatum = oglasRepo.findByOrderByDatumObjaveDesc();
+		m.addAttribute("oglasi", sortiraniDatum);
+		return "prikaz/PregledOglasa";
 	}
-	
+	@RequestMapping(value="/sortDatumNajstariji", method=RequestMethod.GET)
+	public String sortDatumNajstariji(org.springframework.ui.Model m) {
+		
+		List<Oglas> sortiraniDatum = oglasRepo.findByOrderByDatumObjaveAsc();
+		m.addAttribute("oglasi", sortiraniDatum);
+		return "prikaz/PregledOglasa";
+	}
 	@RequestMapping(value = "/prikazSacuvani", method = RequestMethod.GET)
 	public String prikaziSacuvane(HttpServletRequest request, org.springframework.ui.Model m) {
 		Principal p = request.getUserPrincipal();
