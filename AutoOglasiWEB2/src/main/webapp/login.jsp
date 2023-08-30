@@ -52,7 +52,7 @@ function adjust_textarea(h) {
 					<p>Pogresni podaci.</p>
 				</div>
 			</c:if>
-			<div class="form-style-8">
+			<div class="form-style">
 			
 			<form action="${loginUrl}" method="post">
 				<table>

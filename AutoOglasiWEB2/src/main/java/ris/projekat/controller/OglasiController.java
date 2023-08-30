@@ -47,89 +47,62 @@ public class OglasiController {
 	// REPOSITORY
 
 	@Autowired
-	AutomobilRepository ar;
-
+	AutomobilRepository autoRepo;
 	@Autowired
-	ProizvodjacRepository pr;
-
+	ProizvodjacRepository proizvodjacRepo;
 	@Autowired
-	ModelRepository mr;
-
-	//@Autowired
-	//UlogaRepository ur;
-//
-//	@Autowired
-//	KorisnikRepository kr;
-
+	ModelRepository modelRepo;
 	@Autowired
-	ClanRepository cr;
-	
+	ClanRepository clanRepo;
 	@Autowired
-	OglasRepository or;
-	
+	OglasRepository oglasRepo;
 	@Autowired 
-	PorukaRepository porr;
-	
+	PorukaRepository porukaRepo;
 	@Autowired
-	SacuvaniRepository sr;
+	SacuvaniRepository sacuvaniRepo;
 
 	// GET SA MODEL ATTRIBUTE
 
 	@ModelAttribute("automobili")
 	public List<Automobil> getAutomobili() {
-		return ar.findAll();
+		return autoRepo.findAll();
 	}
-
 	@ModelAttribute("proizvodjaci")
 	public List<Proizvodjac> getProizvodjaci() {
-		return pr.findAll();
+		return proizvodjacRepo.findAll();
 	}
-	
 	@ModelAttribute("modeli")
 	public List<Model> getModeli(){
-		return mr.findAll();
+		return modelRepo.findAll();
 	}
-	
+	@ModelAttribute("oglasi")
+	public List<Oglas> getOglasi() {
+		return oglasRepo.findAll();
+	}
 	@ModelAttribute("poruke")
 	public List<Poruka> getPoruke(HttpServletRequest request, org.springframework.ui.Model m) {
 		Principal p = request.getUserPrincipal();
-		Clan c = cr.findByKorisnickoIme(p.getName());
-		List<Poruka> poruke = porr.findByClan1(c);
+		Clan c = clanRepo.findByKorisnickoIme(p.getName());
+		List<Poruka> poruke = porukaRepo.findByClan1(c);
 		return poruke;
-	}
-	
-//	@ModelAttribute("modPoProizv")
-//	public List<Model> getModelPoProizv(Integer idProizvodjac){
-//		Proizvodjac p = pr.findById(idProizvodjac).get();
-//		return mr.findByProizvodjac(p);
-//	}
-	
-
-	@ModelAttribute("oglasi")
-	public List<Oglas> getOglasi() {
-		return or.findAll();
 	}
 	
 	@RequestMapping(value = "/pocetna", method = RequestMethod.GET)
 	public String pocetna() {
 		return "/index";
 	}
-
 	@RequestMapping(value = "/sviOglasi", method = RequestMethod.GET)
 	public String sviOglasi() {
 		return "prikaz/PregledOglasa";
 	}
-
 	@RequestMapping(value = "/unosModela", method = RequestMethod.GET)
 	public String unosModela() {
 		return "unos/UnosModela";
 	}
-	
 	@RequestMapping(value="/unosAutomobila", method=RequestMethod.GET)
 	public String unosAutomobila() {
 		return "unos/UnosAutomobila";
 	}
-	
 	@RequestMapping(value = "/izvestajPocetnik", method = RequestMethod.GET)
 	public String izvestajPocetnik() {
 		return "unos/IzvestajPocetnik";
@@ -139,23 +112,19 @@ public class OglasiController {
 	public Model getModel() {
 		return new Model();
 	}
-	
 	@ModelAttribute("oglas")
 	public Oglas getOglas() {
 		return new Oglas();
 	}
-	
 	@ModelAttribute("automobil")
 	public Automobil getAutomobil() {
 		return new Automobil();
 	}
 	
-
-	
 	@RequestMapping(value="/nadjiModele", method=RequestMethod.GET)
 	public String nadjiModele(Integer idProizvodjac, org.springframework.ui.Model m) {
-		Proizvodjac p = pr.findById(idProizvodjac).get();
-		List<Model> modeli = mr.findByProizvodjac(p);
+		Proizvodjac p = proizvodjacRepo.findById(idProizvodjac).get();
+		List<Model> modeli = modelRepo.findByProizvodjac(p);
 		
 		m.addAttribute("odabraniProizvodjac", p);
 		m.addAttribute("modeliPoProizvodjacu", modeli);
@@ -164,207 +133,176 @@ public class OglasiController {
 	}
 	@RequestMapping(value="/nadjiModelePretraga", method=RequestMethod.GET)
 	public String nadjiModelePretraga(Integer idProizvodjac, org.springframework.ui.Model m) {
-		Proizvodjac p = pr.findById(idProizvodjac).get();
-		List<Model> modeli = mr.findByProizvodjac(p);
-		List<Oglas> oglasi = or.oglasiPoProizvodjacu(p.getIdProizvodjac());
-		
-		
+		Proizvodjac p = proizvodjacRepo.findById(idProizvodjac).get();
+		List<Model> modeli = modelRepo.findByProizvodjac(p);
+		List<Oglas> oglasi = oglasRepo.oglasiPoProizvodjacu(p.getIdProizvodjac());
+			
 		m.addAttribute("odabraniProizvodjac", p);
 		m.addAttribute("modeliPoProizvodjacu", modeli);
 		m.addAttribute("oglasi", oglasi);
+		
 		return "prikaz/PregledOglasa";
 	}
-	
 	@RequestMapping(value = "/nadjiOglaseModela", method = RequestMethod.GET)
 	public String nadjiOglaseModela(Integer idProizvodjac, Integer idModel, org.springframework.ui.Model m) {
-		List<Oglas> oglasi = or.oglasiPoModelu(idModel, idProizvodjac);
+		List<Oglas> oglasi = oglasRepo.oglasiPoModelu(idModel, idProizvodjac);
 		m.addAttribute("oglasi", oglasi);
 		return "prikaz/PregledOglasa";
 	}
 	
 	// CUVANJA
-
+	
 	@RequestMapping(value = "/sacuvajProizvodjaca", method = RequestMethod.POST)
 	public String saveProizvodjac(Proizvodjac p, HttpServletRequest request) {
-		pr.save(p);
+		proizvodjacRepo.save(p);
 		request.getSession().setAttribute("proizvodjac", p);
 		return "unos/UnosProizvodjaca";
 	}
 
 	@RequestMapping(value = "/sacuvajModel", method = RequestMethod.POST)
 	public String sacuvajModel(@ModelAttribute("model") Model model, org.springframework.ui.Model m) {
-		Model mod = mr.save(model);
+		Model mod = modelRepo.save(model);
 		m.addAttribute("modelNov", mod);
 		return "unos/UnosModela";
 	}
 	
-	
 	@RequestMapping(value="/sacAutomobil", method=RequestMethod.POST)
 	public String sacuvajAutomobil(@ModelAttribute("automobil") Automobil a,org.springframework.ui.Model m) {
-		Automobil novi = ar.save(a);
-		
+		Automobil novi = autoRepo.save(a);	
 		m.addAttribute("novAuto", a);
-		
 		return "unos/UnosOglasa";
 	}
-	
 	
 	@RequestMapping(value="/sacuvajOglas", method=RequestMethod.POST)
 	public String sacOglas(@ModelAttribute("oglas") Oglas o, HttpServletRequest request,org.springframework.ui.Model m) {
 		Date danas = new Date();
 		o.setDatumObjave(danas);// uradi init binder ako se setis!!!!
 		Principal principal = request.getUserPrincipal();
-		Clan c = cr.findByKorisnickoIme(principal.getName());
+		Clan c = clanRepo.findByKorisnickoIme(principal.getName());
 		o.setClan(c);
-		Oglas novi = or.save(o);
-		
+		Oglas novi = oglasRepo.save(o);	
 		m.addAttribute("novOglas", novi);
-//		Automobil a = ar.findById(novi.getAutomobil().getIdAutomobil()).get();
-//		a.setOgla(novi);
 		return "unos/UnosOglasa";
 	}
 	
-	
-
 	@RequestMapping(value = "/detaljiOglas", method = RequestMethod.GET)
 	public String prikazDetaljaOOglasu(Integer idOglas, org.springframework.ui.Model m) {
-		Oglas o = or.findById(idOglas).get();
+		Oglas o = oglasRepo.findById(idOglas).get();
 		o.setBrPregleda(o.getBrPregleda()+1);
-		or.save(o);
-		m.addAttribute("prikaziOglas", o);
-		
+		oglasRepo.save(o);
+		m.addAttribute("prikaziOglas", o);	
 		return "prikaz/PrikazDetaljaOglas";
 	}
 	
 	@RequestMapping(value = "/posaljiPoruku", method = RequestMethod.POST)
 	public String posaljiPoruku(Integer idKorisnik, Integer idOglas, String sadrzaj, HttpServletRequest request,org.springframework.ui.Model m) {
 		Poruka p = new Poruka();
-		Clan primalac = cr.findById(idKorisnik).get();
+		Clan primalac = clanRepo.findById(idKorisnik).get();
         Principal principal = request.getUserPrincipal();
+		Clan posiljaoc = clanRepo.findByKorisnickoIme(principal.getName());
 		
-		Clan posiljaoc = cr.findByKorisnickoIme(principal.getName());
 		p.setClan1(primalac);
 		p.setClan2(posiljaoc);
 		p.setSadrzaj(sadrzaj);
+		porukaRepo.save(p);
 		
-		
-		
-		porr.save(p);
 		String potvrda = "Uspesno poslata!";
-		
 		m.addAttribute("potvrda", potvrda);
-		Oglas o = or.findById(idOglas).get();
+		Oglas o = oglasRepo.findById(idOglas).get();
 		m.addAttribute("prikaziOglas", o);
-
 		return "prikaz/PrikazDetaljaOglas";
 	}
 	
 	@RequestMapping(value="/sacuvajOmiljeni", method = RequestMethod.POST)
 	public String sacuvajOglasUOmiljene(Integer idOglas, String napomena, HttpServletRequest request,org.springframework.ui.Model m) {
         Principal principal = request.getUserPrincipal();
-		Clan c = cr.findByKorisnickoIme(principal.getName());
+		Clan c = clanRepo.findByKorisnickoIme(principal.getName());
 		
 		Sacuvani s = new Sacuvani();
 		s.setClan(c);
 		s.setNapomena(napomena);
-		Oglas o = or.findById(idOglas).get();
+		Oglas o = oglasRepo.findById(idOglas).get();
 		s.setOgla(o);
-		
-		sr.save(s);
+		sacuvaniRepo.save(s);
 		String potvrda = "Uspesno sacuvan!";
 		
 		m.addAttribute("prikaziOglas", o);
 		m.addAttribute("potvrdaCuvanje", potvrda);
-		
 		return "prikaz/PrikazDetaljaOglas";
 	}
 	
 	@RequestMapping(value="/sortCenaRastuce", method=RequestMethod.GET)
 	public String sortCenaRastuce(org.springframework.ui.Model m) {
-		List<Oglas> sortiraniCena = or.sortCenaRastuce();
+		List<Oglas> sortiraniCena = oglasRepo.sortCenaRastuce();
 		m.addAttribute("oglasi", sortiraniCena);
 		return "prikaz/PregledOglasa";
 	}
-	
 	@RequestMapping(value="/sortDatumNajnoviji", method=RequestMethod.GET)
 	public String sortDatumNajnoviji(org.springframework.ui.Model m) {
-		List<Oglas> sortiraniDatum = or.sortDatumNajnoviji();
+		List<Oglas> sortiraniDatum = oglasRepo.sortDatumNajnoviji();
 		m.addAttribute("oglasi", sortiraniDatum);
 		return "prikaz/PregledOglasa";
 	}
-	
 	@RequestMapping(value="/sortCenaOpadajuce", method=RequestMethod.GET)
 	public String sortCenaOpadajuce(org.springframework.ui.Model m) {
-		List<Oglas> sortiraniCena = or.sortCenaOpadajuce();
+		List<Oglas> sortiraniCena = oglasRepo.sortCenaOpadajuce();
 		m.addAttribute("oglasi", sortiraniCena);
 		return "prikaz/PregledOglasa";
 	}
-	
-	
-	
 	
 	@RequestMapping(value = "/prikazSacuvani", method = RequestMethod.GET)
 	public String prikaziSacuvane(HttpServletRequest request, org.springframework.ui.Model m) {
 		Principal p = request.getUserPrincipal();
-		Clan c = cr.findByKorisnickoIme(p.getName());
-		List<Sacuvani> sacuvani = sr.findByClan(c);
-		
+		Clan c = clanRepo.findByKorisnickoIme(p.getName());
+		List<Sacuvani> sacuvani = sacuvaniRepo.findByClan(c);	
 		m.addAttribute("sacuvani", sacuvani);
-		
 		return "prikaz/PrikazSacuvani";
 	}
-	
+
 	@RequestMapping(value = "/prikazPoruke", method = RequestMethod.GET)
 	public String prikazPoruka(HttpServletRequest request, org.springframework.ui.Model m) {
 		Principal p = request.getUserPrincipal();
-		Clan c = cr.findByKorisnickoIme(p.getName());
-		List<Poruka> poruke = porr.findByClan1(c);
-		List<Poruka> porukePoslate = porr.findByClan2(c);
+		Clan c = clanRepo.findByKorisnickoIme(p.getName());
+		List<Poruka> poruke = porukaRepo.findByClan1(c);
+		List<Poruka> porukePoslate = porukaRepo.findByClan2(c);
 		m.addAttribute("poruke", poruke);
-		m.addAttribute("porukePoslate", porukePoslate);
-		
+		m.addAttribute("porukePoslate", porukePoslate);		
 		return "prikaz/PrikazPoruka";
 	}
 	
 	@RequestMapping(value = "/odgovori", method = RequestMethod.POST)
 	public String odgovoriNaPoruku(Integer idClan, String sadrzaj, HttpServletRequest request, org.springframework.ui.Model m) {
 		Principal p = request.getUserPrincipal();
-		Clan posiljaoc = cr.findByKorisnickoIme(p.getName());
-		Clan primaoc = cr.findById(idClan).get();
+		Clan posiljaoc = clanRepo.findByKorisnickoIme(p.getName());
+		Clan primaoc = clanRepo.findById(idClan).get();
 		
 		Poruka poruka = new Poruka();
 		poruka.setClan1(primaoc);
 		poruka.setClan2(posiljaoc);
 		poruka.setSadrzaj(sadrzaj);
-		
-		porr.save(poruka);
+		porukaRepo.save(poruka);
 		String potvrda = "Poruka uspesno poslata!";
+
 		m.addAttribute("potvrda", potvrda);
-		
 		return "prikaz/PrikazPoruka";
 	}
 	
 	@RequestMapping(value = "/mojiOglasi", method = RequestMethod.GET)
 	public String mojiOglasi(HttpServletRequest request, org.springframework.ui.Model m) {
 		Principal p = request.getUserPrincipal();
-		Clan c = cr.findByKorisnickoIme(p.getName());
-		
-		List<Oglas> mojiOglasi = or.findByClan(c);
+		Clan c = clanRepo.findByKorisnickoIme(p.getName());
+		List<Oglas> mojiOglasi = oglasRepo.findByClan(c);
 		m.addAttribute("mojiOglasi", mojiOglasi);
-		
 		return "prikaz/MojiOglasi";
 	}
 	
 	@RequestMapping(value = "/obrisiOglas", method = RequestMethod.GET)
 	public String obrisiOglas(Integer idOglas, org.springframework.ui.Model m) {
-		Oglas o = or.findById(idOglas).get();
+		Oglas o = oglasRepo.findById(idOglas).get();
 		Automobil a = o.getAutomobil();
-		
-		or.deleteById(o.getIdOglas());
-		ar.deleteById(a.getIdAutomobil());
-
+		oglasRepo.deleteById(o.getIdOglas());
+		autoRepo.deleteById(a.getIdAutomobil());
 		m.addAttribute("obrisan", "Uspesno obrisan");
-		
 		return "prikaz/MojiOglasi";
 	}
 	
@@ -372,14 +310,14 @@ public class OglasiController {
 	@RequestMapping(value="generisiIzvestajOglasi", method=RequestMethod.GET) 
 	public void izvestajOglasi(HttpServletRequest request, HttpServletResponse response) throws Exception { 
 		Principal p = request.getUserPrincipal();
-		Clan c = cr.findByKorisnickoIme(p.getName());
-		List<Oglas> oglasi = or.findByClan(c);
-		
+		Clan c = clanRepo.findByKorisnickoIme(p.getName());
+		List<Oglas> oglasi = oglasRepo.findByClan(c);
 		
 		response.setContentType("text/html");
 		JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(oglasi);
 		InputStream inputStream = this.getClass().getResourceAsStream("/jasperreports/IzvestajOglasa.jrxml");
 		JasperReport jasperReport = JasperCompileManager.compileReport(inputStream);
+		
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("ime", c.getIme());
 		params.put("prezime", c.getPrezime());
@@ -387,7 +325,6 @@ public class OglasiController {
 		
 		JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, params, dataSource);
 		inputStream.close();
-		
 		
 		response.setContentType("application/x-download");
 		response.addHeader("Content-disposition", "attachment; filename=MojiOglasi.pdf");
@@ -398,14 +335,14 @@ public class OglasiController {
 	@RequestMapping(value="generisiIzvestajSacuvani", method=RequestMethod.GET) 
 	public void izvestajSacuvani(HttpServletRequest request, HttpServletResponse response) throws Exception { 
 		Principal p = request.getUserPrincipal();
-		Clan c = cr.findByKorisnickoIme(p.getName());
-		List<Sacuvani> oglasi = sr.findByClan(c);
-		
+		Clan c = clanRepo.findByKorisnickoIme(p.getName());
+		List<Sacuvani> oglasi = sacuvaniRepo.findByClan(c);
 		
 		response.setContentType("text/html");
 		JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(oglasi);
 		InputStream inputStream = this.getClass().getResourceAsStream("/jasperreports/IzvestajSacuvani.jrxml");
 		JasperReport jasperReport = JasperCompileManager.compileReport(inputStream);
+		
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("ime", c.getIme());
 		params.put("prezime", c.getPrezime());
@@ -413,7 +350,6 @@ public class OglasiController {
 		
 		JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, params, dataSource);
 		inputStream.close();
-		
 		
 		response.setContentType("application/x-download");
 		response.addHeader("Content-disposition", "attachment; filename=SacuvaniOglasi.pdf");
@@ -424,8 +360,8 @@ public class OglasiController {
 	@RequestMapping(value="generisiIzvestajPocetnik", method=RequestMethod.GET) 
 	public void izvestajPocetnik(Integer cena, Integer idProizvodjac, Integer godiste, HttpServletRequest request, HttpServletResponse response) throws Exception { 
 		Principal p = request.getUserPrincipal();
-		Clan c = cr.findByKorisnickoIme(p.getName());
-		List<Oglas> oglasiPocetnik = or.oglasiZaPocetnika(idProizvodjac, cena, godiste);
+		Clan c = clanRepo.findByKorisnickoIme(p.getName());
+		List<Oglas> oglasiPocetnik = oglasRepo.oglasiZaPocetnika(idProizvodjac, cena, godiste);
 		
 		for (Oglas o : oglasiPocetnik) {
 			System.out.println(o.getIdOglas());
@@ -443,7 +379,6 @@ public class OglasiController {
 		
 		JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, params, dataSource);
 		inputStream.close();
-		
 		
 		response.setContentType("application/x-download");
 		response.addHeader("Content-disposition", "attachment; filename=IzvestajZaPocetnika.pdf");

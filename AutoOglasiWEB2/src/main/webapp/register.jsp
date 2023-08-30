@@ -39,7 +39,7 @@
 
 
 		<div class="center" style="font-size: 20px; text-align: left;">
-			<div class="form-style-8">
+			<div class="form-style">
 
 			<sf:form modelAttribute="user" action="register" method="post">
 				<table>

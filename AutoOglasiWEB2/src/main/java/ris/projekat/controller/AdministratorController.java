@@ -46,42 +46,35 @@ public class AdministratorController {
 	// REPOSITORY
 
 	@Autowired
-	AutomobilRepository ar;
-
+	AutomobilRepository autoRepo;
 	@Autowired
-	ProizvodjacRepository pr;
-
+	ProizvodjacRepository proizvodjacRepo;
 	@Autowired
-	ModelRepository mr;
-
+	ModelRepository modelRepo;
 	@Autowired
-	ClanRepository cr;
-
-
+	ClanRepository clanRepo;
 	@Autowired
-	OglasRepository or;
-	
+	OglasRepository oglasRepo;
 	@Autowired 
-	PorukaRepository porr;
-	
+	PorukaRepository porukaRepo;
 	@Autowired
-	SacuvaniRepository sr;
+	SacuvaniRepository sacuvaniRepo;
 
 	// GET SA MODEL ATTRIBUTE
 
 	@ModelAttribute("automobili")
 	public List<Automobil> getAutomobili() {
-		return ar.findAll();
+		return autoRepo.findAll();
 	}
 
 	@ModelAttribute("proizvodjaci")
 	public List<Proizvodjac> getProizvodjaci() {
-		return pr.findAll();
+		return proizvodjacRepo.findAll();
 	}
 	
 	@ModelAttribute("modeli")
 	public List<Model> getModeli(){
-		return mr.findAll();
+		return modelRepo.findAll();
 	}
 	
 	
@@ -111,15 +104,12 @@ public class AdministratorController {
 		return new Automobil();
 	}
 
-	
 	@RequestMapping(value="/nadjiModele", method=RequestMethod.GET)
 	public String nadjiModele(Integer idProizvodjac, org.springframework.ui.Model m) {
-		Proizvodjac p = pr.findById(idProizvodjac).get();
-		List<Model> modeli = mr.findByProizvodjac(p);
-		
+		Proizvodjac p = proizvodjacRepo.findById(idProizvodjac).get();
+		List<Model> modeli = modelRepo.findByProizvodjac(p);
 		m.addAttribute("odabraniProizvodjac", p);
 		m.addAttribute("modeliPoProizvodjacu", modeli);
-		
 		return "unos/UnosAutomobila";
 	}
 	
@@ -132,14 +122,14 @@ public class AdministratorController {
 
 	@RequestMapping(value = "/sacuvajProizvodjaca", method = RequestMethod.POST)
 	public String saveProizvodjac(Proizvodjac p, HttpServletRequest request) {
-		pr.save(p);
+		proizvodjacRepo.save(p);
 		request.getSession().setAttribute("proizvodjac", p);
 		return "unos/UnosProizvodjaca";
 	}
 
 	@RequestMapping(value = "/sacuvajModel", method = RequestMethod.POST)
 	public String sacuvajModel(@ModelAttribute("model") Model model, org.springframework.ui.Model m) {
-		Model mod = mr.save(model);
+		Model mod = modelRepo.save(model);
 		m.addAttribute("modelNov", mod);
 		return "unos/UnosModela";
 	}

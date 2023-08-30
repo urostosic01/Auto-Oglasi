@@ -6,10 +6,10 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 
 @SpringBootApplication
 @EntityScan("model")
-public class AutoOglasiWeb2Application {
+public class AutoOglasiWebApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(AutoOglasiWeb2Application.class, args);
+		SpringApplication.run(AutoOglasiWebApplication.class, args);
 	}
 
 }
