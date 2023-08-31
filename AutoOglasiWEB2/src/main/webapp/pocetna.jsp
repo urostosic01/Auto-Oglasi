@@ -12,36 +12,9 @@
 	href="${pageContext.request.contextPath}/styles/style.css">
 <meta charset="UTF-8">
 <title>Auto oglasi</title>
-<style type="text/css">
-
-.logo {
-    display: inline-block;
-    float: left;
-    vertical-align: top;
-    width: 50px;
-    height: 50px;
-    margin-right: 20px;
-    margin-top: 15px;    /* if you want it vertically middle of the navbar. */
-}
-</style>
 </head>
 <body>
-	<div class="topnav">
-<%-- 		<img class="logo" alt="logo" src="${pageContext.request.contextPath}/img/logo_transparent.png">
- --%>  		<a href="/AutoOglasi/prikaz/Onama.jsp">O nama</a> 
-  			<a href="/AutoOglasi/auth/loginPage">Login</a> 
-		<security:authorize access="isAuthenticated()">
-			<a href="/AutoOglasi/admin/unosProizvodjaca">Nov proizvodjac</a>
-			<a href="/AutoOglasi/admin/unosModela">Nov model</a>
-			<a href="/AutoOglasi/oglasi/sviOglasi">Oglasi</a>
-			<a href="/AutoOglasi/oglasi/unosAutomobila">Dodaj oglas</a>
-			<a href="/AutoOglasi/oglasi/prikazSacuvani">Sacuvani</a>
-			<a href="/AutoOglasi/oglasi/prikazPoruke">Poruke</a>
-			<a href="/AutoOglasi/oglasi/mojiOglasi">Moji oglasi</a>
-			<a style="float: right;" href="/AutoOglasi/auth/logout">Odjava</a>
-		</security:authorize>
-	</div>
-	
+		<jsp:include page="/template/header.jsp"></jsp:include>
 		
 		<div class="center" style="font-size: 25px; text-align: center;">
 			<h1 style="text-align: center;">Dobrodosli

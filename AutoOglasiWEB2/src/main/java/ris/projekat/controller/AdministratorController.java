@@ -83,12 +83,6 @@ public class AdministratorController {
 		return "/index";
 	}
 	
-
-	@RequestMapping(value = "/unosModela", method = RequestMethod.GET)
-	public String unosModela() {
-		return "unos/UnosModela";
-	}
-	
 	@RequestMapping(value="/unosAutomobila", method=RequestMethod.GET)
 	public String unosAutomobila() {
 		return "unos/UnosAutomobila";
@@ -113,7 +107,6 @@ public class AdministratorController {
 		return "unos/UnosAutomobila";
 	}
 	
-	// CUVANJA
 	
 	@RequestMapping(value = "/unosProizvodjaca", method = RequestMethod.GET)
 	public String unosProizvodjaca() {
@@ -131,35 +124,8 @@ public class AdministratorController {
 	public String sacuvajModel(@ModelAttribute("model") Model model, org.springframework.ui.Model m) {
 		Model mod = modelRepo.save(model);
 		m.addAttribute("modelNov", mod);
-		return "unos/UnosModela";
+		return "unos/UnosProizvodjaca";
 	}
 	
-	
-//	@RequestMapping(value="generisiIzvestajPoProizvodjacu", method=RequestMethod.GET) 
-//	public void izvestajProizvodjac(HttpServletRequest request, HttpServletResponse response) throws Exception { 
-//		Principal p = request.getUserPrincipal();
-//		Clan c = cr.findByKorisnickoIme(p.getName());
-//		List<Automobil> automobili;
-//		
-//		
-//		response.setContentType("text/html");
-//		JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(automobili);
-//		InputStream inputStream = this.getClass().getResourceAsStream("/jasperreports/IzvestajSacuvani.jrxml");
-//		JasperReport jasperReport = JasperCompileManager.compileReport(inputStream);
-//		Map<String, Object> params = new HashMap<String, Object>();
-//		params.put("ime", c.getIme());
-//		params.put("prezime", c.getPrezime());
-//		params.put("idKorisnik", c.getIdClan());		
-//		
-//		JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, params, dataSource);
-//		inputStream.close();
-//		
-//		
-//		response.setContentType("application/x-download");
-//		response.addHeader("Content-disposition", "attachment; filename=SacuvaniOglasi.pdf");
-//		OutputStream out = response.getOutputStream();
-//		JasperExportManager.exportReportToPdfStream(jasperPrint,out);
-//	}
-//	
 
 }

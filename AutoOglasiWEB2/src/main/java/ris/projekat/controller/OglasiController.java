@@ -150,22 +150,7 @@ public class OglasiController {
 		return "prikaz/PregledOglasa";
 	}
 	
-	// CUVANJA
-	
-	@RequestMapping(value = "/sacuvajProizvodjaca", method = RequestMethod.POST)
-	public String saveProizvodjac(Proizvodjac p, HttpServletRequest request) {
-		proizvodjacRepo.save(p);
-		request.getSession().setAttribute("proizvodjac", p);
-		return "unos/UnosProizvodjaca";
-	}
 
-	@RequestMapping(value = "/sacuvajModel", method = RequestMethod.POST)
-	public String sacuvajModel(@ModelAttribute("model") Model model, org.springframework.ui.Model m) {
-		Model mod = modelRepo.save(model);
-		m.addAttribute("modelNov", mod);
-		return "unos/UnosModela";
-	}
-	
 	@RequestMapping(value="/sacAutomobil", method=RequestMethod.POST)
 	public String sacuvajAutomobil(@ModelAttribute("automobil") Automobil a,org.springframework.ui.Model m) {
 		Automobil novi = autoRepo.save(a);	
@@ -231,31 +216,25 @@ public class OglasiController {
 		return "prikaz/PrikazDetaljaOglas";
 	}
 	
-	@RequestMapping(value="/sortCenaRastuce", method=RequestMethod.GET)
-	public String sortCenaRastuce(org.springframework.ui.Model m) {
-		List<Oglas> sortiraniCena = oglasRepo.findByOrderByCenaAsc();
-		m.addAttribute("oglasi", sortiraniCena);
-		return "prikaz/PregledOglasa";
-	}
-	@RequestMapping(value="/sortCenaOpadajuce", method=RequestMethod.GET)
-	public String sortCenaOpadajuce(org.springframework.ui.Model m) {
-		List<Oglas> sortiraniCena = oglasRepo.findByOrderByCenaDesc();
-		m.addAttribute("oglasi", sortiraniCena);
-		return "prikaz/PregledOglasa";
-	}	
-	@RequestMapping(value="/sortDatumNajnoviji", method=RequestMethod.GET)
-	public String sortDatumNajnoviji(org.springframework.ui.Model m) {
-		List<Oglas> sortiraniDatum = oglasRepo.findByOrderByDatumObjaveDesc();
-		m.addAttribute("oglasi", sortiraniDatum);
-		return "prikaz/PregledOglasa";
-	}
-	@RequestMapping(value="/sortDatumNajstariji", method=RequestMethod.GET)
-	public String sortDatumNajstariji(org.springframework.ui.Model m) {
+	@RequestMapping(value = "/sortiranje", method = RequestMethod.POST)
+	public String univerzalniSort(org.springframework.ui.Model m, String tipSort) {
+		List<Oglas> sortirani;
+		if(tipSort.equals("cenaRastuce")) {
+			sortirani = oglasRepo.findByOrderByCenaAsc();
+		} else if(tipSort.equals("cenaOpadajuce")) {
+			sortirani = oglasRepo.findByOrderByCenaDesc();
+		} else if(tipSort.equals("najnoviji")){
+			sortirani = oglasRepo.findByOrderByDatumObjaveDesc();
+		} else if(tipSort.equals("najstariji")) {
+			sortirani = oglasRepo.findByOrderByDatumObjaveAsc();
+		} else {
+			sortirani = oglasRepo.findAll();
+		}
+		m.addAttribute("oglasi", sortirani);
 		
-		List<Oglas> sortiraniDatum = oglasRepo.findByOrderByDatumObjaveAsc();
-		m.addAttribute("oglasi", sortiraniDatum);
 		return "prikaz/PregledOglasa";
 	}
+	
 	@RequestMapping(value = "/prikazSacuvani", method = RequestMethod.GET)
 	public String prikaziSacuvane(HttpServletRequest request, org.springframework.ui.Model m) {
 		Principal p = request.getUserPrincipal();
