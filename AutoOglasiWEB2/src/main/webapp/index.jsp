@@ -15,20 +15,26 @@
 </head>
 <body>
 	<jsp:include page="/template/header.jsp"></jsp:include>
+	<div class="main-container">
+		<h1 style="text-align: center;">Dobrodosli <security:authorize access="isAuthenticated()">
+					<security:authentication property="principal.username" />
+				</security:authorize> na Nas Sajt za Auto Oglase</h1>
+		<img src="${pageContext.request.contextPath}/img/index-cars.png"
+			class="center" />
 
-	<h1 style="text-align: center;">OGLASI</h1>
-	<img src="${pageContext.request.contextPath}/img/logo_transparent.png"
-		class="center" style="height: 200px; width: 200px;" />
-
-	<div class="kontejner">
-		<c:forEach items="${oglasi}" var="o">
-			<div class="card">
-				<h1>${o.automobil.proizvodjac.naziv}${o.automobil.model.naziv}</h1>
-				<br>
-				<p class="price">${o.cena}e</p>
-				<p>${o.mesto}</p>
-			</div>
-		</c:forEach>
+		<p>Trazite savrsen automobil? Zelite prodati svoje vozilo brzo i
+			jednostavno? Mi smo ovde da vam pomognemo! Nasa stranica je centralna
+			destinacija za sve vase potrebe vezane za automobile. Bez obzira da
+			li ste u potrazi za porodicnim SUV-om, sportskim autom, ili
+			ekonomicnim gradskim vozilom, ovde cete pronaci sirok izbor vozila
+			koja odgovaraju vasim zeljama i potrebama.</p>
+		<p>Nema boljeg mesta za pronalazenje svog sledeceg automobila ili
+			prodaju postojeceg. Uzmite vreme da istrazite nase oglase i
+			pronadjite savrsen automobil za vas. Hvala sto ste deo nase
+			automobilske zajednice! Spremni smo da vam pomognemo da ostvarite
+			svoje automobilske snove.</p>
 	</div>
+	<jsp:include page="/template/footer.jsp"></jsp:include>
+
 </body>
 </html>

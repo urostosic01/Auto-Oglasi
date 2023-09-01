@@ -1,12 +1,64 @@
+	*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 body {
 	margin: 0;
 	font-family: 'Segoe UI Light';
-	background-color: lightgrey;	
+	background-color: lightgray;
+	color: #17252A;
 }
 
+
+.topnav {
+	background-color: #17252A;
+	overflow: hidden;
+	box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.22);
+	height: 50px;
+}
+/*  Style the links inside the navigation bar*/
+.topnav a {
+	float: left;
+	color: #FEFFFF;
+	text-align: center;
+	padding: 14px 16px;
+	text-decoration: none;
+	font-size: 17px;
+}
+
+/* Change the color of links on hover */
+.topnav a:hover, .topnav-logo:hover {
+	background-color: #8E8D8A;
+	color: black;
+	cursor: pointer;
+	transition: 0.5s;
+}
+
+
+.topnav-logo img {
+	width: 54px;
+	height: 21px;
+}
+
+
+
 .main-container {
-	padding: 20px;
-	margin-left: 10px;
+	padding: 20px 20px;
+	margin: auto;
+	padding-bottom: 15%;
+	display:flex;
+	flex-direction: column;
+	align-content: center;
+	justify-content: center;
+}
+.main-container p {
+	width: 70%;
+	text-align: justify;
+	margin: auto;
+	text-indent: 2em;
+	
 }
 
 span .bold {
@@ -17,82 +69,69 @@ span .bold {
 	display: block;
 	margin-left: auto;
 	margin-right: auto;
-	width: 50%;
+	width: 60%;
 }
-
-.topnav {
-	background-color: #333;
-	overflow: hidden;
-	box-shadow: 0px 2.98256px 7.4564px rgba(0, 0, 0, 0.1);
-}
-
-/* Style the links inside the navigation bar */
-.topnav a {
-	float: left;
-	color: #f2f2f2;
-	text-align: center;
-	padding: 14px 16px;
-	text-decoration: none;
-	font-size: 17px;
-}
-
-/* Change the color of links on hover */
-.topnav a:hover {
-	background-color: #ddd;
-	color: black;
+.center-all {
+	margin-bottom: 15%;
 }
 
 .card {
 	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
 	width: 250px;
-	margin: 0.5%;
 	text-align: center;
 	background-color: whitesmoke;
 	border-color: #333;
 	border-style: solid;
 	border-radius: 15px;
 	border-width: 5px;
+	color: #4F4A41;
+ 	margin: 15px 15px; 
+	padding: 15px 15px;		
 }
 
 .price {
-	background-color: red;
+	background-color: #17252A;
 	color: white;
 	font-size: 22px;
+	border-radius: 15px;
+	text-align: center;
 }
 
+.card p {
+	margin-top: 10px;
+	margin-bottom: 20px;
+}
 .card button {
 	border: none;
 	outline: 0;
 	padding: 12px;
 	color: white;
-	background-color: #333;
+	background-color: #17252A;
 	text-align: center;
 	cursor: pointer;
-	width: 70%;
+	width: 100%;
 	font-size: 18px;
-	margin-bottom: 5px
+	margin-top: 10px;
 }
 
 .card button:hover {
 	opacity: 0.7;
+	transition: 0.5s;
 }
 
-.kontejner {
+.lista-oglasa {
 	display: flex;
 	flex-wrap: wrap;
 }
 
-.kontejner a {
-	color: white;
-}
 
 button {
-	background-color: #555555;
-	border: 1px solid #555555;
+	background-color: #17252A;
+	border: 1px solid #17252A;
 	border-radius: 4px;
 	box-shadow: rgba(0, 0, 0, .1) 0 2px 4px 0;
 	box-sizing: border-box;
-	color: #fff;
+	color: #FEFFFF;
 	cursor: pointer;
 	font-size: 16px;
 	font-weight: 400;
@@ -142,14 +181,15 @@ input[type="text"]:focus, input[type="date"]:focus, input[type="datetime"]:focus
 
 /*OVO JE DEO ZA LOGIN FORMU*/
 .form-style {
-	width: 500px;
+	width: 50%;
 	padding: 30px;
-	background: #FFFFFF;
+	background: whitesmoke;
 	margin: 50px auto;
 	box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.22);
 	-moz-box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.22);
 	-webkit-box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.22);
 	border-radius: 10px;
+	color: #17252A;
 }
 
 select.select-minimal {
@@ -192,10 +232,11 @@ select.select-minimal:focus {
 	-moz-appearance: none;
 }
 
-.oglas-detalji-container, .oglas-kontakt-container{
+.oglas-detalji-container, .oglas-kontakt-container, .unos-proizvodjac-container, .unos-model-container, 
+.unos-automobila-container, .izvestaj-container, .unos-oglasa-container, .o-nama {
 	width: 55%;
 	margin: auto;
-	background-color: #EAE7D7;
+	background-color: whitesmoke;
 	overflow: hidden;
 	box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.22);
 	-moz-box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.22);
@@ -203,34 +244,248 @@ select.select-minimal:focus {
 	border-radius: 10px;
 	padding: 20px;
 }
-.oglas-kontakt-container {
-	
+.unos-automobila-container {
+	margin-top: 20px;
 }
+.unos-automobila-container input[type="text"],.unos-automobila-container input[type="number"],
+.unos-automobila-container select{
+	margin-bottom: 8px;
+	margin-left: 5px;
+}
+
+.oglas-kontakt-container {
+	margin-bottom: 15%;
+}
+.unos-proizvodjac-container, .unos-model-container {
+	text-align: center;
+}
+
 .oglas-kontakt-container label {
 	font-size: 18px;
 	margin-left: 20px;
 	margin-right: 15px;
-	font-weight: 600;
+	font-weight: 500;
 }
+
 .oglas-kontakt-container button {
 	margin-left: 10px;
 }
+
 .oglas-detalji-container p {
 	font-size: 18px;
 }
 
-.oglas-naslov {
+
+.naslov {
 	text-align: center;
-	border-bottom:1px solid black;
-	padding: 5px;	
+	border-bottom: 1px solid black;
+	padding: 5px;
 	margin-bottom: 30px;
+	color: #17252A;
+}
+
+.naslov-kraci {
+	width: 24%;	
+	text-align: center;
+	border-bottom: 1px solid black;
+	margin-bottom: 30px;
+	color: #17252A;
+	margin: auto;
+	padding-top: 15px;
+	padding-bottom: 10px;
+}
+
+.o-nama {
+	width: 70%;
+	padding-bottom: 35px;
+}
+
+.o-nama h1 {
+	font-size: 2.2em;
+}
+.onama-text {
+	padding-top: 15px;
+	padding-bottom: 15px;
 }
 
 .oglas-detalji-leva {
 	float: left;
 	margin-left: 10%;
 }
+
 .oglas-detalji-desna {
 	float: right;
 	margin-right: 10%;
+}
+
+.filter-container {
+	overflow: hidden;
+	width: 100%;
+}
+
+.filter-container .navSort {
+	float: right;
+	padding: 10px;
+}
+
+.filter-container .navPretraga {
+	float: left;
+	padding: 10px
+}
+
+
+
+.poruka-container {
+	margin-left: auto;
+	margin-right: auto;
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
+.lista-poruka li {
+	border-radius: 3px;
+	padding: 25px 30px;
+	display: flex;
+	justify-content: space-between;
+	margin-bottom: 5px;
+}
+.lista-poruka .table-header {
+	background-color: #17252A;
+	font-size: 14px;
+	letter-spacing: 0.03em;
+	color: white;
+}
+.lista-poruka .poruka-red {
+	background-color: #fff;
+	box-shadow: 0px 0px 9px 0px rgba(0, 0, 0, 0.1);
+}
+.lista-poruka .kolona-1 {
+	flex-basis: 10%;
+}
+.lista-poruka .kolona-2 {
+	flex-basis: 40%;
+}
+.lista-poruka .kolona-3 {
+	flex-basis: 25%;
+}
+.lista-poruka .kolona-4 {
+	flex-basis: 25%;
+}
+@media all and (max-width: 767px) {
+	.lista-poruka li {
+		display: block;
+   }
+	.lista-poruka .kolona {
+		flex-basis: 100%;
+   }
+	.lista-poruka .kolona {
+		display: flex;
+		padding: 10px 0;
+   }
+	.lista-poruka .kolona:before {
+		color: #6c7a89;
+		padding-right: 10px;
+		content: attr(data-label);
+		flex-basis: 50%;
+		text-align: right;
+   }
+}
+
+
+
+
+footer {
+	background-color: #17252A;
+}
+
+.footer-container {
+	height: 250px;
+	width: 100%;
+	padding: 20px 10px 10px;
+}
+
+.footer-naslov {
+	color: white;
+	text-align: center;
+	padding: 5px;
+	border-bottom: 1px solid #001116;
+}
+
+.footer-social {
+	margin-top: 5px;
+	display: flex;
+	justify-content: center;
+}
+
+.footer-social a {
+	text-decoration: none;
+	padding: 10px;
+	background-color: white;
+	margin: 10px;
+	border-radius: 40%;
+}
+
+.footer-social a i {
+	font-size: 2em;
+	color: #17252A;
+	opacity: 0.9;
+}
+
+.footer-social a:hover {
+	background-color: #17252A;
+	transition: 0.5s;
+}
+
+.footer-social a:hover i {
+	color: white;
+	transition: 0.5s;
+}
+
+.footer-navbar {
+	margin: 20px 0;
+}
+.footer-navbar ul {
+	display: flex;
+	justify-content: center;
+	list-style-type: none;
+	
+}
+.footer-navbar ul li a {
+	color: white;
+	margin: 20px;
+	text-decoration: none;
+	font-size: 1.3em;
+	opacity: 0.6;
+	transition: 0.5s;
+}
+.footer-navbar ul li a:hover {
+	opacity: 1;
+}
+.footer-bottom {
+	background-color: #001116;
+	padding: 10px;
+	text-align: center;
+}
+
+.footer-bottom p {
+	color: white;
+}
+
+.designer {
+	opacity: 0.7;
+	text-transform: uppercase;
+	font-weight: 400;
+	letter-spacing: 1px;
+	margin: 0px 5px;
+}
+
+@media (max-width: 700px) {
+	.footer-navbar ul {
+		flex-direction: column;
+	}
+	.footer-navbar ul li { 
+		width: 100%;
+		text-align: center;
+		margin: 10px;
+	}
 }

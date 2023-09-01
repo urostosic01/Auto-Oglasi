@@ -33,7 +33,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/auth/**, /gost/**").permitAll() // svaka putanja koja pocinje sa auth je dostupna svima
 				.antMatchers("/oglasi/**").hasAnyRole("administrator", "registrovani")
 				.antMatchers("/admin/**").hasAnyRole("administrator").and().formLogin().loginPage("/auth/loginPage").loginProcessingUrl("/login")
-				.usernameParameter("username").passwordParameter("password").defaultSuccessUrl("/auth/pocetna");
+				.usernameParameter("username").passwordParameter("password").defaultSuccessUrl("/auth/index");
 //				.failureForwardUrl("/index.html")
 //				.and().exceptionHandling()
 //				.accessDeniedPage("/access_denied");

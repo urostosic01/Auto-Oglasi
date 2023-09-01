@@ -21,57 +21,54 @@
 <body>
 	<jsp:include page="/template/header.jsp"></jsp:include>
 
+	<div class="main-container">
+		<h1 class="naslov">PRIMLJENE</h1>
+		<div class="center">
 
-	<h2 style="text-align: center;">PRIMLJENE</h2>
-	<div class="center">
-		<table border="1">
-			<p style="text-align: center;">
-				<c:if test="${!empty potvrda}">
-				${potvrda}
-	</c:if>
-			</p>
-			<tr>
-				<th>Poruka od:</th>
-				<th>Sadrzaj:</th>
-				<th>Odgovori</th>
 
-			</tr>
-			<c:forEach items="${poruke}" var="p">
-				<tr>
-					<td>${p.clan2.korisnickoIme}</td>
-					<td>${p.sadrzaj}</td>
-					<td>
-						<form action="/AutoOglasi/oglasi/odgovori" method="post">
-							<input type="hidden" value="${p.clan2.idClan}" name="idClan">
-							<input type="text" name="sadrzaj"> <input type="submit"
-								value="Odgovori">
-						</form>
-					</td>
-				</tr>
-			</c:forEach>
-		</table>
+			<div class="poruka-container">
+				<ul class="lista-poruka">
+					<li class="table-header">
+						<div class="kolona kolona-1">Clan</div>
+						<div class="kolona kolona-2">Poruka</div>
+						<div class="kolona kolona-3"></div>
+					</li>
+					<c:forEach items="${poruke}" var="p">
+						<li class="poruka-red">
+							<div class="kolona kolona-1">${p.clan2.korisnickoIme}</div>
+							<div class="kolona kolona-2">${p.sadrzaj}</div>
+							<form action="/AutoOglasi/oglasi/odgovori" method="post">
+								<input type="hidden" value="${p.clan2.idClan}" name="idClan">
+								<input type="text" name="sadrzaj">
+								<button type="submit">Odgovori</button>
+							</form>
+						</li>
+					</c:forEach>					
+				</ul>
+				<c:if test="${!empty potvrda}"><p style="text-align: center;">${potvrda}</p></c:if>
+			</div>
+			</div>
+		<br>
+		<h1 class="naslov">POSLATE</h1>
+		<div class="center">	
+			<div class="poruka-container">
+				<ul class="lista-poruka">
+					<li class="table-header">
+						<div class="kolona kolona-1">Clan</div>
+						<div class="kolona kolona-2">Poruka</div>
+ -->					</li>
+					<c:forEach items="${porukePoslate}" var="p2">
+						<li class="poruka-red">
+							<div class="kolona kolona-1">${p2.clan1.korisnickoIme}</div>
+							<div class="kolona kolona-2">${p2.sadrzaj}</div>
+						</li>
+					</c:forEach>					
+				</ul>
+				<c:if test="${!empty potvrda}"><p style="text-align: center;">${potvrda}</p></c:if>
+			</div>
+		</div>		
 	</div>
+	<jsp:include page="/template/footer.jsp"></jsp:include>
 
-	<h2 style="text-align: center;">POSLATE</h2>
-
-	<div class="">
-		<table border="1">
-			<p style="text-align: center;">
-				<c:if test="${!empty potvrda}">
-				${potvrda}
-	</c:if>
-			</p>
-			<tr>
-				<th>Poruka za:</th>
-				<th>Sadrzaj:</th>
-			</tr>
-			<c:forEach items="${porukePoslate}" var="p2">
-				<tr>
-					<td>${p2.clan1.korisnickoIme}</td>
-					<td>${p2.sadrzaj}</td>
-				</tr>
-			</c:forEach>
-		</table>
-	</div>
 </body>
 </html>

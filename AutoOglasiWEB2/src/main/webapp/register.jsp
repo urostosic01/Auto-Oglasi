@@ -13,7 +13,7 @@
 </head>
 <body>
 	<jsp:include page="/template/header.jsp"></jsp:include>
-	
+	<div class="main-container">
 	<div class="center" style="font-size: 20px; text-align: left;">
 		<div class="form-style">
 
@@ -43,16 +43,19 @@
 						<td>Broj telefona:</td>
 						<td><sf:input path="brojTelefona" /></td>
 					</tr>
+					
 					<tr>
+						<td>Uloga: </td>
 						<td><sf:select path="ulogas" items="${roles}"
-								itemValue="idUloga" itemLabel="naziv" /></td>
+								itemValue="idUloga" itemLabel="naziv" cssClass="select-minimal"/></td>
 					</tr>
-					<tr>
-						<td><input type="submit" value="Sacuvaj"></td>
-					</tr>
+					
 				</table>
+				<div style="text-align: center;"><button type="submit">Registruj se</button></div>
 			</sf:form>
 		</div>
 	</div>
+	</div>
+	<jsp:include page="/template/footer.jsp"></jsp:include>
 </body>
 </html>

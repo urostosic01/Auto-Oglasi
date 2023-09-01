@@ -80,4 +80,9 @@ public class LoginController {
 		return "pocetna";
 	}
 
+	@RequestMapping(value = "/index", method = RequestMethod.GET)
+	public String getIndex() {
+		return "index";
+	}
+
 }

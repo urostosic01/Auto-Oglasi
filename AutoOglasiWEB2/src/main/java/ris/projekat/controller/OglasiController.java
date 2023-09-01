@@ -249,7 +249,11 @@ public class OglasiController {
 		Principal p = request.getUserPrincipal();
 		Clan c = clanRepo.findByKorisnickoIme(p.getName());
 		List<Poruka> poruke = porukaRepo.findByClan1(c);
+		poruke.sort((o1, o2) -> o2.getIdPoruka() - o1.getIdPoruka());	// poruke sa vecim ID su kasnije dodate
+																		// pa prikazujemo prvo novije
+																		// posto u poruci nemamo promenljivu za vreme slanja
 		List<Poruka> porukePoslate = porukaRepo.findByClan2(c);
+		porukePoslate.sort((o1, o2) -> o2.getIdPoruka() - o1.getIdPoruka());
 		m.addAttribute("poruke", poruke);
 		m.addAttribute("porukePoslate", porukePoslate);		
 		return "prikaz/PrikazPoruka";

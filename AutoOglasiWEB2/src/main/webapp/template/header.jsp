@@ -14,14 +14,19 @@
 </head>
 <body>
 	<div class="topnav">
+
+		<a class="topnav-logo" href="/AutoOglasi/index.jsp"><img alt="logo"
+			src="${pageContext.request.contextPath}/img/logo_transparent.png"></a>
+
 		<security:authorize access="!isAuthenticated()">
 			<a href="/AutoOglasi/prikaz/Onama.jsp">O nama</a>
 			<a href="/AutoOglasi/auth/loginPage">Login</a>
 			<a href="/AutoOglasi/gost/sviOglasi">Oglasi</a>
 		</security:authorize>
 
-		<security:authorize access="hasRole('registrovani') || hasRole('administrator')">
-			<a href="/AutoOglasi/prikaz/Onama.jsp">O nama</a>		
+		<security:authorize
+			access="hasRole('registrovani') || hasRole('administrator')">
+			<a href="/AutoOglasi/prikaz/Onama.jsp">O nama</a>
 			<a href="/AutoOglasi/oglasi/sviOglasi">Oglasi</a>
 			<a href="/AutoOglasi/oglasi/unosAutomobila">Dodaj oglas</a>
 			<a href="/AutoOglasi/oglasi/prikazSacuvani">Sacuvani</a>
@@ -30,7 +35,7 @@
 			<a style="float: right;" href="/AutoOglasi/auth/logout">Odjava</a>
 		</security:authorize>
 		<security:authorize access="hasRole('administrator')">
-			<a href="/AutoOglasi/admin/unosProizvodjaca">Nov proizvodjac</a>
+			<a href="/AutoOglasi/admin/unosProizvodjaca">Novo vozilo</a>
 		</security:authorize>
 	</div>
 

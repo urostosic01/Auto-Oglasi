@@ -15,20 +15,23 @@
 <body>
 	<jsp:include page="/template/header.jsp"></jsp:include>
 
+	<div class="main-container">
+		<h1 class="naslov">Izvestaj za pocetnika</h1>
 
-	<h1 style="text-align: center;">Izvestaj za pocetnika</h1>
+		<div class="izvestaj-container">
 
-	<div class="">
-
-		<form action="/AutoOglasi/oglasi/generisiIzvestajPocetnik">
-			<select name="idProizvodjac">
-				<c:forEach items="${proizvodjaci}" var="p">
-					<option value="${p.idProizvodjac}">${p.naziv}</option>
-				</c:forEach>
-			</select> Godiste(minimalno): <input type="number" name="godiste">
-			Cena(maksimalna): <input type="number" name="cena">
-			<button type="submit">Generisi</button>
-		</form>
+			<form action="/AutoOglasi/oglasi/generisiIzvestajPocetnik">
+				<select name="idProizvodjac" class="select-minimal">
+					<c:forEach items="${proizvodjaci}" var="p">
+						<option value="${p.idProizvodjac}">${p.naziv}</option>
+					</c:forEach>
+				</select> Godiste(minimalno): <input type="number" name="godiste">
+				Cena(maksimalna): <input type="number" name="cena">
+				<button type="submit">Generisi</button>
+			</form>
+		</div>
 	</div>
+	<jsp:include page="/template/footer.jsp"></jsp:include>
+
 </body>
 </html>
