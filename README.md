@@ -44,8 +44,8 @@ Zajedničke funkcionalnosti su navedene prve (u sklopu gosta), a potom svaki sle
 - [ ] Administratoru ubaciti stranicu sa statistikom
 - [ ] Još kategorija za sortiranje oglasa
 - [ ] Dodavanje slike za oglas
-- [ ] Korekcije navigacije
-- [ ] Stilizovanje izgleda
+- [x] Korekcije navigacije
+- [x] Stilizovanje izgleda
 
 ## Kontakt
 Uroš Tošić - urostosic01@gmail.com
